@@ -1,0 +1,7 @@
+pre[class*="language-"] {
+    margin: 0;
+}
+
+.line-highlight{
+    background-color: #ffffff22;
+}
