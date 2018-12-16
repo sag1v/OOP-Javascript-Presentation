@@ -3,6 +3,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 
 var path = require('path');
 var webpack = require('webpack');
+const fileLimit = 99999;
 
 module.exports = {
   mode: 'production',
@@ -43,24 +44,15 @@ module.exports = {
       }]
     }, {
       test: /\.css$/,
-      use: [{
-        loader: 'style-loader'
-      }, {
-        loader: 'style-loader'
-      }, {
-        loader: 'css-loader',
-        options: {
-          modules: true,
-          localIdentName: '[path][name]__[local]',
-        }
-      }]
+      use: ['style-loader', 'css-loader'],
+      include: __dirname,
     }, {
       test: /\.(png|jpg|gif)$/,
       use: [{
         loader: 'url-loader',
 
         options: {
-          limit: 8192
+          limit: fileLimit
         }
       }]
     }, {
@@ -69,7 +61,7 @@ module.exports = {
         loader: 'url-loader',
 
         options: {
-          limit: 10000,
+          limit: fileLimit,
           mimetype: 'image/svg+xml'
         }
       }]

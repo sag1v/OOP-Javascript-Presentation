@@ -2,6 +2,7 @@
 
 var path = require('path');
 var webpack = require('webpack');
+const fileLimit = 99999;
 
 module.exports = {
   mode: 'development',
@@ -52,7 +53,7 @@ module.exports = {
         loader: 'url-loader',
 
         options: {
-          limit: 10000,
+          limit: fileLimit,
           mimetype: 'image/svg+xml'
         }
       }],
@@ -64,7 +65,7 @@ module.exports = {
 
         options: {
           mimetype: 'image/png',
-          limit: 100
+          limit: fileLimit
         }
       }],
       include: path.join(__dirname, 'assets')
@@ -74,7 +75,8 @@ module.exports = {
         loader: 'url-loader',
 
         options: {
-          mimetype: 'image/gif'
+          mimetype: 'image/gif',
+          limit: fileLimit
         }
       }],
       include: path.join(__dirname, 'assets')
@@ -84,7 +86,8 @@ module.exports = {
         loader: 'url-loader',
 
         options: {
-          mimetype: 'image/jpg'
+          mimetype: 'image/jpg',
+          limit: fileLimit
         }
       }],
       include: path.join(__dirname, 'assets')
