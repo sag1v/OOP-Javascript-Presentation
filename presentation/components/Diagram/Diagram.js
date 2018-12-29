@@ -12,7 +12,7 @@ const Wrapper = styled(Flex)`
     min-height: 70px;
     background-color: #272822;
     color: #fff;
-    font-size: 0.6em;
+    font-size: 0.8em;
     margin: ${({ spaced }) => spaced ? '10px 0' : '0'};
     &::after{
         content: '${({ garbaged }) => garbaged ? 'X' : ''}';
@@ -47,6 +47,7 @@ const Proto = styled(Flex)`
 
 const PropName = styled(Flex)`
     margin-right: 7px;
+    color: ${({ highlightColor }) => highlightColor || 'inherit'};
 `;
 
 const ObjectProp = styled(Flex)`
@@ -61,16 +62,21 @@ const MemoryItemsWrapper = styled(Flex)`
      }
 `;
 
-const ObjectMemory = ({ name, props = [], hideProto, isCombo, highlight }) => (
+const ObjectMemory = ({ name, props = [], hideProto, protoValue, isCombo, highlight, highlightLinkage }) => (
     <Flex rowsDisplay bgColor={highlight}>
-        {!isCombo && <PropName>{`${name}: `}</PropName>}
+        {!isCombo && <PropName highlightColor={highlightLinkage}>{`${name}: `}</PropName>}
         <Flex rowsDisplay>
             <Flex>
                 <Curly empty={hideProto && props.length === 0} />
             </Flex>
             <ObjectProp className="objProp">
                 {props.map((p, i) => <Flex key={i}>{p}</Flex>)}
-                {!hideProto && <Proto>__proto__:</Proto>}
+                {!hideProto && (
+                    <Proto rowsDisplay>
+                        <PropName>__proto__:</PropName>
+                        <PropName highlightColor={highlightLinkage}>{protoValue}</PropName>
+                    </Proto>)
+                }
             </ObjectProp>
             <Flex>
                 <Curly closing empty={hideProto && props.length === 0} />
@@ -85,10 +91,10 @@ const WrapedMemory = styled(Flex)`
     margin-bottom: ${({ hideObject }) => hideObject ? '0' : '5px'};
 `;
 
-const FuncMemory = ({ name, props, hideObject, isCombo = true }) => (
+const FuncMemory = ({ name, props, hideObject, highlightLinkage, isCombo = true }) => (
     <WrapedMemory hideObject={hideObject}>
         <Flex rowsDisplay>
-            <PropName>{`${name}: `}</PropName>
+            <PropName highlightColor={highlightLinkage}>{`${name}: `}</PropName>
             <Flex>[ ƒ ]</Flex>
         </Flex>
         {!hideObject && (
@@ -100,9 +106,9 @@ const FuncMemory = ({ name, props, hideObject, isCombo = true }) => (
     </WrapedMemory>
 );
 
-const PrimitiveMemory = ({ name, value }) => (
+const PrimitiveMemory = ({ name, value, highlightLinkage }) => (
     <Flex rowsDisplay>
-        <PropName>{name}: </PropName>
+        <PropName highlightColor={highlightLinkage}>{name}: </PropName>
         {value ? <Flex>{value}</Flex> : <Flex>_ _ _</Flex>}
     </Flex>
 );

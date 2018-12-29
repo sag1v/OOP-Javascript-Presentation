@@ -1,11 +1,8 @@
 import React from 'react';
 import uuidv4 from 'uuid/v4';
 import Flex from '../../Flex';
-import { MemoryItem } from '../utils';
-import Diargram from '../../Diagram';
 import Diagram from '../../Diagram';
-
-const addIf = (condition, item) => [...condition ? [item] : []];
+import {addIf} from '../utils';
 
 const newUserProps = ({name, username}) => [
     <Diagram.PrimitiveMemory key={uuidv4()} name="name" value={name} />,
@@ -57,7 +54,7 @@ const ToRender = ({
     const User1 = user1Global ? Diagram.Obj : Diagram.PrimitiveMemory;
     const User2 = user2Global ? Diagram.Obj : Diagram.PrimitiveMemory;
     return (
-        <Diargram
+        <Diagram
             global
             memoryItems={empty ? [] : [
                 <Diagram.Func key={uuidv4()} name="createUser" hideObject isCombo={false} />,

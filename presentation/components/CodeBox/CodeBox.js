@@ -12,7 +12,7 @@ import 'prismjs/plugins/line-highlight/prism-line-highlight.js'
 import './styles.css';
 
 const CodeStyle = styled.div`
-    font-size: 1rem;
+    font-size: 1.4rem;
     max-height: calc(85vh - 20px);
     width: 100%;
 `;

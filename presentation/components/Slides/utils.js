@@ -27,3 +27,5 @@ export class MemoryItem {
         this.children = children || [];
     }
 }
+
+export const addIf = (condition, item) => [...condition ? [item] : []];

@@ -5,13 +5,12 @@ import { Heading, Slide } from 'spectacle';
 import WideSlide from '../../WideSlide';
 import Flex from '../../Flex';
 import CodeBox from '../../CodeBox';
-import Diagram from '../../Diagram';
 import literal from '!raw-loader!./literalCode';
 import dotNotation from '!raw-loader!./dotNotationCode';
 import objectCreate from '!raw-loader!./objectCreateCode';
 import functionFactory from '!raw-loader!./functionCode';
-import contextContent, { createContentKey } from './contextContent';
-import { createLineNumberUpdater, MemoryItem } from '../utils';
+import contextContent from './contextContent';
+import { createLineNumberUpdater } from '../utils';
 
 const lineNumbersArr = Object.entries(contextContent).reduce((acc, next) => {
 	acc.push(next.lineNumbers);
@@ -61,7 +60,7 @@ class RunCode extends React.Component {
 	}
 
 	onKeypress = e => {
-		this.setState(({ lineNumbersIdx, memoryItems, threadItems }) => {
+		this.setState(({ lineNumbersIdx }) => {
 			const nextLineNumbersIdx = updateLineNumber(e, lineNumbersIdx);
 			if (nextLineNumbersIdx === lineNumbersIdx) return;
 			return {
