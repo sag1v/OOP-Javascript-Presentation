@@ -5,7 +5,12 @@ import {
   Deck,
 } from "spectacle";
 
-import { CreatingObjects, Prototype } from './components/Slides';
+import {
+  CreatingObjects,
+  Prototype,
+  NewFunc,
+  FunctionObjectCombo
+} from './components/Slides';
 
 // Import theme
 import createTheme from "spectacle/lib/themes/default";
@@ -35,7 +40,9 @@ export default class Presentation extends React.Component {
         <CreatingObjects createUsing="functionFactory" />
         <CreatingObjects runCode />
         <Prototype />
-
+        <NewFunc />
+        <FunctionObjectCombo />
+        <NewFunc runCode />
       </Deck>
     );
   }

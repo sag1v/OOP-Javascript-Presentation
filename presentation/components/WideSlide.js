@@ -15,6 +15,7 @@ const WideSlide = styled(Slide)`
 
 const Side = styled(Flex)`
   padding: 5px 10px;
+  margin: ${props => props.margin || '0'};
   flex: ${props => props.size};
 `;
 
