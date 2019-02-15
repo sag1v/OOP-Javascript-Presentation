@@ -7,11 +7,11 @@
     "clean": "rimraf dist",
     "build": "cpx index.html docs && cross-env NODE_ENV=production webpack --config webpack.config.production.js",
     "lint": "eslint --ext .js,.jsx .",
-    "deploy": "npm run build && surge -p .",
+    "deploy": "gh-pages -d docs",
     "export": "spectacle-renderer --delay 3000",
     "start": "cross-env NODE_ENV=development node server.js"
   },
-  "author": "",
+  "author": "Sagiv b.g",
   "license": "MIT",
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
@@ -51,6 +51,7 @@
     "eslint-plugin-react": "^7.11.1",
     "express": "^4.16.3",
     "file-loader": "^2.0.0",
+    "gh-pages": "^2.0.1",
     "html-loader": "^0.5.5",
     "is-buffer": "^2.0.3",
     "markdown-loader": "^4.0.0",
