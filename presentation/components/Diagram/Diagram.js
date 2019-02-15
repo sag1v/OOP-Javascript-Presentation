@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
+import uuidv4 from 'uuid/v4';
 import Flex from '../Flex';
 import Curly from '../Curly';
-import { MemoryItem } from '../Slides/utils';
 
 const Wrapper = styled(Flex)`
     position: relative;
@@ -62,26 +62,38 @@ const MemoryItemsWrapper = styled(Flex)`
      }
 `;
 
-const ObjectMemory = ({ name, props = [], hideProto, protoValue, isCombo, highlight, highlightLinkage }) => (
+const CodeLine = styled(Flex)`
+    font-size: ${({small}) => small ? '0.6em' : '0.8em'};
+    font-weight: 100;
+    margin-top: 5px;
+     ${({highlight}) => css`
+        padding: ${highlight ? '1px 2px' : '0'};
+        background-color: ${highlight ? '#673ab7' : 'transparent'};
+     `};
+`;
+
+const ObjectMemory = ({ name, props = [], hideProto, protoValue, isCombo, highlight, highlightLinkage, isUndefined }) => (
     <Flex rowsDisplay bgColor={highlight}>
         {!isCombo && <PropName highlightColor={highlightLinkage}>{`${name}: `}</PropName>}
-        <Flex rowsDisplay>
-            <Flex>
-                <Curly empty={hideProto && props.length === 0} />
+        {isUndefined ? <Undefined /> :
+            <Flex rowsDisplay>
+                <Flex>
+                    <Curly empty={hideProto && props.length === 0} />
+                </Flex>
+                <ObjectProp className="objProp">
+                    {props.map((p, i) => <Flex key={i} style={{fontSize: '0.8em'}}>{p}</Flex>)}
+                    {!hideProto && (
+                        <Proto rowsDisplay>
+                            <PropName style={{opacity: 0.6}}>__proto__:</PropName>
+                            <PropName highlightColor={highlightLinkage}>{protoValue}</PropName>
+                        </Proto>)
+                    }
+                </ObjectProp>
+                <Flex>
+                    <Curly closing empty={hideProto && props.length === 0} />
+                </Flex>
             </Flex>
-            <ObjectProp className="objProp">
-                {props.map((p, i) => <Flex key={i}>{p}</Flex>)}
-                {!hideProto && (
-                    <Proto rowsDisplay>
-                        <PropName>__proto__:</PropName>
-                        <PropName highlightColor={highlightLinkage}>{protoValue}</PropName>
-                    </Proto>)
-                }
-            </ObjectProp>
-            <Flex>
-                <Curly closing empty={hideProto && props.length === 0} />
-            </Flex>
-        </Flex>
+        }
     </Flex>
 );
 
@@ -109,9 +121,13 @@ const FuncMemory = ({ name, props, hideObject, highlightLinkage, isCombo = true 
 const PrimitiveMemory = ({ name, value, highlightLinkage }) => (
     <Flex rowsDisplay>
         <PropName highlightColor={highlightLinkage}>{name}: </PropName>
-        {value ? <Flex>{value}</Flex> : <Flex>_ _ _</Flex>}
+        {value ? <Flex>{value}</Flex> : <Undefined />}
     </Flex>
 );
+
+const Undefined = () => <Flex>_ _ _</Flex>;
+
+const arrWithKeys = arr => arr && arr.map((item) => <Flex key={uuidv4()}>{item}</Flex>)
 
 const Diagram = ({ global, threadItems, memoryItems, garbaged }) => {
     const typeOfContext = global ? 'Global' : 'Local';
@@ -122,13 +138,13 @@ const Diagram = ({ global, threadItems, memoryItems, garbaged }) => {
                     {`${typeOfContext} Execution Thread`}
                 </Header>
                 <Flex>
-                    {threadItems}
+                    {arrWithKeys(threadItems)}
                 </Flex>
             </Block>
             <Block size={1}>
                 <Header>{`${typeOfContext} Memory`}</Header>
                 <MemoryItemsWrapper className="sagiiv">
-                    {memoryItems}
+                    {arrWithKeys(memoryItems)}
                 </MemoryItemsWrapper>
             </Block>
         </Wrapper>
@@ -139,5 +155,6 @@ const Diagram = ({ global, threadItems, memoryItems, garbaged }) => {
 Diagram.Obj = ObjectMemory;
 Diagram.Func = FuncMemory;
 Diagram.PrimitiveMemory = PrimitiveMemory;
+Diagram.CodeLine = CodeLine;
 
 export default Diagram;
