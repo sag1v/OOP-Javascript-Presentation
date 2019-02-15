@@ -3,7 +3,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 
 var path = require('path');
 var webpack = require('webpack');
-const fileLimit = 99999;
+const fileLimit = 9999999;
 
 module.exports = {
   mode: 'production',
