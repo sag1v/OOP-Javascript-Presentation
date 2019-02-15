@@ -14,7 +14,7 @@ module.exports = {
 
   output: {
     path: __dirname,
-    filename: 'dist/index.js',
+    filename: 'docs/index.js', // for gh-pages
     publicPath: '/'
   },
 
