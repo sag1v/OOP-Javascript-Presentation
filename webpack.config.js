@@ -15,7 +15,7 @@ module.exports = {
   ],
   output: {
     path: __dirname,
-    filename: 'bundle.js',
+    filename: 'docs/index.js',
     publicPath: '/',
   },
   plugins: [
