@@ -83,7 +83,7 @@ const ObjectMemory = ({ name, props = [], hideProto, protoValue, isCombo, highli
                 <ObjectProp className="objProp">
                     {props.map((p, i) => <Flex key={i} style={{fontSize: '0.8em'}}>{p}</Flex>)}
                     {!hideProto && (
-                        <Proto rowsDisplay>
+                        <Proto wrap rowsDisplay>
                             <PropName style={{opacity: 0.6}}>__proto__:</PropName>
                             <PropName highlightColor={highlightLinkage}>{protoValue}</PropName>
                         </Proto>)

@@ -2,7 +2,7 @@
 
 var path = require('path');
 var webpack = require('webpack');
-const fileLimit = 99999;
+const fileLimit = 999999;
 
 module.exports = {
   mode: 'development',
@@ -15,7 +15,7 @@ module.exports = {
   ],
   output: {
     path: __dirname,
-    filename: 'docs/index.js',
+    filename: 'build.js',
     publicPath: '/',
   },
   plugins: [

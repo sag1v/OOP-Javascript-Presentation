@@ -83,7 +83,9 @@ const ToRender = ({
     user2PropsIndex = 0,
     user2ShowThreadIndex = 0,
     showUser2This,
-    gcUser2
+    gcUser2,
+    sayHelloUser1,
+    sayHelloUser2
 }) => {
     return (
         <Diagram
@@ -116,11 +118,13 @@ const ToRender = ({
                         garbaged={gcUser2}
                         name="John"
                         userName="john77"
-                        showArgs={showUser2Args}                        
+                        showArgs={showUser2Args}
                         showThis={showUser2This}
                         memoryProps={user2PropsArr.slice(0, user2PropsIndex)}
                         showThreadIndex={user2ShowThreadIndex}
                     />),
+                    ...addIf(sayHelloUser1, <Diagram.CodeLine >{`user1.sayHi()`}</Diagram.CodeLine>),
+                    ...addIf(sayHelloUser2, <Diagram.CodeLine >{`user2.sayHi()`}</Diagram.CodeLine>),
             ]}
         />
     )
@@ -128,6 +132,7 @@ const ToRender = ({
 
 
 export default [
+    /** user 1 ***********/
     { lineNumbers: '  ', render: <ToRender hideUser1ProtoLinkage hideFunc hidePrototype hideUser1 user1Undefined hideUser1Diagram hideUser1Invoke hideUser2 user2Undefined hideUser2Diagram hideUser2Invoke /> },
     { lineNumbers: '1-4', render: <ToRender hideUser1ProtoLinkage hidePrototype hideUser1 user1Undefined hideUser1Diagram hideUser1Invoke hideUser2 user2Undefined hideUser2Diagram hideUser2Invoke /> },
     { lineNumbers: '6-8', render: <ToRender hideUser1ProtoLinkage hideUser1 user1Undefined hideUser1Diagram hideUser1Invoke hideUser2 user2Undefined hideUser2Diagram hideUser2Invoke /> },
@@ -136,5 +141,24 @@ export default [
     { lineNumbers: '1', render: <ToRender hideUser1ProtoLinkage showUser1Args user1Undefined hideUser2 user2Undefined hideUser2Diagram hideUser2Invoke /> },
     { lineNumbers: '1', render: <ToRender hideUser1ProtoLinkage user1ShowThreadIndex={1} showUser1Args user1Undefined hideUser2 user2Undefined hideUser2Diagram hideUser2Invoke /> },
     { lineNumbers: '1', render: <ToRender hideUser1ProtoLinkage user1ShowThreadIndex={1} showUser1This showUser1Args user1Undefined hideUser2 user2Undefined hideUser2Diagram hideUser2Invoke /> },
-    { lineNumbers: '1', render: <ToRender user1ShowThreadIndex={1} showUser1This showUser1Args user1Undefined hideUser2 user2Undefined hideUser2Diagram hideUser2Invoke /> },
+    { lineNumbers: '1', render: <ToRender hideUser1ProtoLinkage user1ShowThreadIndex={2} showUser1This showUser1Args user1Undefined hideUser2 user2Undefined hideUser2Diagram hideUser2Invoke /> },
+    { lineNumbers: '1', render: <ToRender user1ShowThreadIndex={2} showUser1This showUser1Args user1Undefined hideUser2 user2Undefined hideUser2Diagram hideUser2Invoke /> },
+    { lineNumbers: '2', render: <ToRender user1ShowThreadIndex={3} user1PropsIndex={1} showUser1This showUser1Args user1Undefined hideUser2 user2Undefined hideUser2Diagram hideUser2Invoke /> },
+    { lineNumbers: '3', render: <ToRender user1ShowThreadIndex={4} user1PropsIndex={2} showUser1This showUser1Args user1Undefined hideUser2 user2Undefined hideUser2Diagram hideUser2Invoke /> },
+    { lineNumbers: '4', render: <ToRender user1ShowThreadIndex={5} user1PropsIndex={2} showUser1This showUser1Args user1Undefined hideUser2 user2Undefined hideUser2Diagram hideUser2Invoke /> },
+    { lineNumbers: '10', render: <ToRender gcUser1 user1ShowThreadIndex={5} user1PropsIndex={2} showUser1This showUser1Args hideUser2 user2Undefined hideUser2Diagram hideUser2Invoke /> },
+    /** user 2 ***********/
+    { lineNumbers: '11', render: <ToRender gcUser1 user1ShowThreadIndex={5} user1PropsIndex={2} showUser1This showUser1Args hideUser2 user2Undefined hideUser2Diagram /> },
+    { lineNumbers: '1', render: <ToRender gcUser1 user1ShowThreadIndex={5} user1PropsIndex={2} showUser1This showUser1Args user2Undefined /> },
+    { lineNumbers: '1', render: <ToRender gcUser1 user1ShowThreadIndex={5} user1PropsIndex={2} showUser1This showUser1Args user2Undefined showUser2Args/> },
+    { lineNumbers: '1', render: <ToRender gcUser1 user1ShowThreadIndex={5} user1PropsIndex={2} showUser1This showUser1Args user2Undefined showUser2Args user2ShowThreadIndex={1} /> },
+    { lineNumbers: '1', render: <ToRender gcUser1 user1ShowThreadIndex={5} user1PropsIndex={2} showUser1This showUser1Args user2Undefined showUser2Args user2ShowThreadIndex={2} /> },
+    { lineNumbers: '1', render: <ToRender gcUser1 user1ShowThreadIndex={5} user1PropsIndex={2} showUser1This showUser1Args user2Undefined showUser2Args user2ShowThreadIndex={2} showUser2This/> },
+    { lineNumbers: '2', render: <ToRender gcUser1 user1ShowThreadIndex={5} user1PropsIndex={2} showUser1This showUser1Args user2Undefined showUser2Args user2ShowThreadIndex={3} showUser2This user2PropsIndex={1} /> },
+    { lineNumbers: '3', render: <ToRender gcUser1 user1ShowThreadIndex={5} user1PropsIndex={2} showUser1This showUser1Args user2Undefined showUser2Args user2ShowThreadIndex={4} showUser2This user2PropsIndex={2} /> },
+    { lineNumbers: '4', render: <ToRender gcUser1 user1ShowThreadIndex={5} user1PropsIndex={2} showUser1This showUser1Args user2Undefined showUser2Args user2ShowThreadIndex={5} showUser2This user2PropsIndex={2} /> },
+    { lineNumbers: '11', render: <ToRender gcUser1 user1ShowThreadIndex={5} user1PropsIndex={2} showUser1This showUser1Args showUser2Args user2ShowThreadIndex={5} showUser2This user2PropsIndex={2} gcUser2/> },
+    { lineNumbers: '12', render: <ToRender sayHelloUser1 gcUser1 user1ShowThreadIndex={5} user1PropsIndex={2} showUser1This showUser1Args showUser2Args user2ShowThreadIndex={5} showUser2This user2PropsIndex={2} gcUser2/> },
+    { lineNumbers: '13', render:<ToRender sayHelloUser1 sayHelloUser2 gcUser1 user1ShowThreadIndex={5} user1PropsIndex={2} showUser1This showUser1Args showUser2Args user2ShowThreadIndex={5} showUser2This  user2PropsIndex={2} gcUser2/> },
+
 ];

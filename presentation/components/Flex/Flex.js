@@ -6,5 +6,6 @@ export default styled.div(props => ({
     height: props.fluid ? '100%' : 'auto',
     flexDirection: props.rowsDisplay ? 'row' : 'column',
     flex: props.size,
-    backgroundColor: props.bgColor ? props.bgColor : 'transparent'
+    backgroundColor: props.bgColor ? props.bgColor : 'transparent',
+    flexWrap: props.wrap ? 'wrap' : 'nowrap'
 }));

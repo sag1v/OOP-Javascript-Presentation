@@ -9,7 +9,8 @@ import {
   CreatingObjects,
   Prototype,
   NewFunc,
-  FunctionObjectCombo
+  FunctionObjectCombo,
+  ClassFunc
 } from './components/Slides';
 
 // Import theme
@@ -43,6 +44,7 @@ export default class Presentation extends React.Component {
         <NewFunc />
         <FunctionObjectCombo />
         <NewFunc runCode />
+        <ClassFunc />
       </Deck>
     );
   }

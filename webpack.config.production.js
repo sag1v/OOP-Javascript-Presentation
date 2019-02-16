@@ -7,14 +7,14 @@ const fileLimit = 9999999;
 
 module.exports = {
   mode: 'production',
+  devtool: "source-map",
   entry: [
     '@babel/polyfill',
     './index'
   ],
-
   output: {
     path: __dirname,
-    filename: 'docs/index.js', // for gh-pages
+    filename: 'docs/build.js', // for gh-pages
     publicPath: '/'
   },
 
@@ -39,13 +39,15 @@ module.exports = {
     }, {
       test: /\.(js|jsx)$/,
       exclude: /node_modules/,
+      include: /prism/,
       use: [{
         loader: 'babel-loader'
-      }]
+      }],
+      include: __dirname
     }, {
       test: /\.css$/,
       use: ['style-loader', 'css-loader'],
-      include: __dirname,
+      include: path.join(__dirname, 'assets')
     }, {
       test: /\.(png|jpg|gif)$/,
       use: [{
@@ -54,7 +56,8 @@ module.exports = {
         options: {
           limit: fileLimit
         }
-      }]
+      }],
+      include: path.join(__dirname, 'assets')
     }, {
       test: /\.svg$/,
       use: [{
@@ -64,7 +67,8 @@ module.exports = {
           limit: fileLimit,
           mimetype: 'image/svg+xml'
         }
-      }]
+      }],
+      include: path.join(__dirname, 'assets')
     }]
   },
 
