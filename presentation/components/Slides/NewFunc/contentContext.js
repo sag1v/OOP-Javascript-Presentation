@@ -22,9 +22,9 @@ const CreateUserDeclaration = ({ hidePrototype }) => (
     />
 );
 
-const Userdeclaration = (props) => (
-    <Diagram.Obj name={name} hideProto isUndefined={isUndefined} />
-);
+// const Userdeclaration = (props) => (
+//     <Diagram.Obj name={name} hideProto isUndefined={isUndefined} />
+// );
 
 const threadItems = ({ name, userName }) => [
     { code: `this = { }`, highlight: true },
