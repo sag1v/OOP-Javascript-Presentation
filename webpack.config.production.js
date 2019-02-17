@@ -44,20 +44,11 @@ module.exports = {
         loader: 'babel-loader'
       }],
       include: __dirname
-    }, {
+    },
+    {
       test: /\.css$/,
       use: ['style-loader', 'css-loader'],
-      include: path.join(__dirname, 'assets')
-    }, {
-      test: /\.(png|jpg|gif)$/,
-      use: [{
-        loader: 'url-loader',
-
-        options: {
-          limit: fileLimit
-        }
-      }],
-      include: path.join(__dirname, 'assets')
+      include: __dirname,
     }, {
       test: /\.svg$/,
       use: [{
@@ -69,6 +60,39 @@ module.exports = {
         }
       }],
       include: path.join(__dirname, 'assets')
+    }, {
+      test: /\.png$/,
+      use: [{
+        loader: 'url-loader',
+
+        options: {
+          mimetype: 'image/png',
+          limit: fileLimit
+        }
+      }],
+      include: path.join(__dirname, 'assets')
+    }, {
+      test: /\.gif$/,
+      use: [{
+        loader: 'url-loader',
+
+        options: {
+          mimetype: 'image/gif',
+          limit: fileLimit
+        }
+      }],
+      include: path.join(__dirname, 'assets')
+    }, {
+      test: /\.(jpg)$/,
+      use: [{
+        loader: 'url-loader',
+
+        options: {
+          mimetype: 'image/jpg',
+          limit: fileLimit
+        }
+      }],
+      include: path.join(__dirname, 'assets')
     }]
   },
 
@@ -77,6 +101,7 @@ module.exports = {
 
     minimizer: [new TerserPlugin({
       parallel: true,
+      sourceMap: true,
       terserOptions: {
         ecma: 6,
       },
