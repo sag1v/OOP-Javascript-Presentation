@@ -7,6 +7,7 @@ const ToRender = ({ empty, hideDouble, showCombo, showSomeProp, showPrototype })
     return (
         <Diagram
             global
+            hideExecutionContext
             memoryItems={empty ? [] : [
                 ...addIf(
                     !hideDouble,
@@ -21,9 +22,6 @@ const ToRender = ({ empty, hideDouble, showCombo, showSomeProp, showPrototype })
                         ]} 
                             />
                 )
-            ]}
-            threadItems={empty ? [] : [
-
             ]}
         />
     )

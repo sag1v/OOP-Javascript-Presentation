@@ -7,6 +7,7 @@ import dotNotation from '!raw-loader!./dotNotationCode';
 import objectCreate from '!raw-loader!./objectCreateCode';
 import functionFactory from '!raw-loader!./functionCode';
 import contextContent from './contextContent';
+import WideSlide from '../../WideSlide';
 
 
 const createObjectWith = {
@@ -23,7 +24,7 @@ const createObjectWith = {
 		code: objectCreate
 	},
 	functionFactory: {
-		title: "Automating",
+		title: "Factory Functions",
 		code: functionFactory
 	},
 };
@@ -33,7 +34,14 @@ const functionExampleCode = createObjectWith.functionFactory.code;
 
 const CreatingObjects = ({ createUsing, runCode }) => runCode
 	? <Runcode code={functionExampleCode} contextContent={contextContent} />
-	: <CodeSample code={createObjectWith[createUsing].code} title={createObjectWith[createUsing].title} />
+	: (
+		<WideSlide fluid>
+			<CodeSample
+				code={createObjectWith[createUsing].code}
+				title={createObjectWith[createUsing].title}
+			/>
+		</WideSlide>
+	);
 
 const typeKeys = Object.keys(createObjectWith);
 

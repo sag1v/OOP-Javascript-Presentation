@@ -10,7 +10,9 @@ import {
   Prototype,
   NewFunc,
   FunctionObjectCombo,
-  ClassFunc
+  ClassFunc,
+  NativeChain,
+  SubclassFactory
 } from './components/Slides';
 
 // Import theme
@@ -34,7 +36,7 @@ export default class Presentation extends React.Component {
 
   render() {
     return (
-      <Deck transition={["slide"]} transitionDuration={500} theme={theme}>
+      <Deck progress="pacman" style={{alignItems: 'flex-start'}} transition={["slide"]} transitionDuration={500} theme={theme}>
         <CreatingObjects createUsing="literal" />
         <CreatingObjects createUsing="dotNotation" />
         <CreatingObjects createUsing="objectCreate" />
@@ -45,6 +47,9 @@ export default class Presentation extends React.Component {
         <FunctionObjectCombo />
         <NewFunc runCode />
         <ClassFunc />
+        <NativeChain />
+        <NativeChain showSubClassing />
+        <SubclassFactory />
       </Deck>
     );
   }

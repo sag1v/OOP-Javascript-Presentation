@@ -1,12 +1,11 @@
 import React from 'react';
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 import uuidv4 from 'uuid/v4';
 import Flex from '../Flex';
 import Curly from '../Curly';
 
 const Wrapper = styled(Flex)`
     position: relative;
-    border: 1px solid #aaa;
     width: 100%;
     height: 100%;
     min-height: 70px;
@@ -29,7 +28,7 @@ const Wrapper = styled(Flex)`
 `;
 
 const Block = styled(Flex)`
-    border: 1px solid #ddd;
+    border: 1px solid ${({bordered}) => bordered ? 'red' : '#ddd'};
     padding: 0 5px 5px 5px;
     flex: ${({ size }) => size};
 `;
@@ -56,17 +55,20 @@ const ObjectProp = styled(Flex)`
 
 const MemoryItemsWrapper = styled(Flex)`
      > div{
-         margin: 1px 0;
-         border-top: 1px solid #333;
-         padding: 3px 0;
+         padding: 5px 0;
+
+        &:not(:first-of-type){
+            border-top: 1px solid #343434;
+        }
+
      }
 `;
 
 const CodeLine = styled(Flex)`
-    font-size: ${({small}) => small ? '0.6em' : '0.8em'};
+    font-size: ${({ small }) => small ? '0.6em' : '0.8em'};
     font-weight: 100;
     margin-top: 5px;
-     ${({highlight}) => css`
+     ${({ highlight }) => css`
         padding: ${highlight ? '1px 2px' : '0'};
         background-color: ${highlight ? '#673ab7' : 'transparent'};
      `};
@@ -81,10 +83,10 @@ const ObjectMemory = ({ name, props = [], hideProto, protoValue, isCombo, highli
                     <Curly empty={hideProto && props.length === 0} />
                 </Flex>
                 <ObjectProp className="objProp">
-                    {props.map((p, i) => <Flex key={i} style={{fontSize: '0.8em'}}>{p}</Flex>)}
+                    {props.map((p, i) => <Flex key={i} style={{ fontSize: '0.8em' }}>{p}</Flex>)}
                     {!hideProto && (
-                        <Proto wrap rowsDisplay>
-                            <PropName style={{opacity: 0.6}}>__proto__:</PropName>
+                        <Proto flexWrap rowsDisplay>
+                            <PropName style={{ opacity: 0.6 }}>__proto__:</PropName>
                             <PropName highlightColor={highlightLinkage}>{protoValue}</PropName>
                         </Proto>)
                     }
@@ -103,7 +105,7 @@ const WrapedMemory = styled(Flex)`
     margin-bottom: ${({ hideObject }) => hideObject ? '0' : '5px'};
 `;
 
-const FuncMemory = ({ name, props, hideObject, highlightLinkage, isCombo = true }) => (
+const FuncMemory = ({ name, props, hideObject, highlightLinkage, isCombo = true, hideProto = true, protoValue }) => (
     <WrapedMemory hideObject={hideObject}>
         <Flex rowsDisplay>
             <PropName highlightColor={highlightLinkage}>{`${name}: `}</PropName>
@@ -112,7 +114,7 @@ const FuncMemory = ({ name, props, hideObject, highlightLinkage, isCombo = true 
         {!hideObject && (
             <Flex>
                 <Flex>+</Flex>
-                <ObjectMemory isCombo={isCombo} hideProto name={name} props={props} />
+                <ObjectMemory highlightLinkage={highlightLinkage} isCombo={isCombo} hideProto={hideProto} protoValue={protoValue} name={name} props={props} />
             </Flex>
         )}
     </WrapedMemory>
@@ -129,19 +131,21 @@ const Undefined = () => <Flex>_ _ _</Flex>;
 
 const arrWithKeys = arr => arr && arr.map((item) => <Flex key={uuidv4()}>{item}</Flex>)
 
-const Diagram = ({ global, threadItems, memoryItems, garbaged }) => {
+const Diagram = ({ global, threadItems, memoryItems, garbaged, hideExecutionContext, bordered }) => {
     const typeOfContext = global ? 'Global' : 'Local';
     return (
         <Wrapper rowsDisplay spaced={!global} garbaged={garbaged}>
-            <Block size={1.3}>
-                <Header>
-                    {`${typeOfContext} Execution Thread`}
-                </Header>
-                <Flex>
-                    {arrWithKeys(threadItems)}
-                </Flex>
-            </Block>
-            <Block size={1}>
+            {!hideExecutionContext && (
+                <Block size={1.3} bordered={bordered}>
+                    <Header>
+                        {`${typeOfContext} Execution Thread`}
+                    </Header>
+                    <Flex>
+                        {arrWithKeys(threadItems)}
+                    </Flex>
+                </Block>
+            )}
+            <Block size={1} bordered={bordered}>
                 <Header>{`${typeOfContext} Memory`}</Header>
                 <MemoryItemsWrapper className="sagiiv">
                     {arrWithKeys(memoryItems)}
