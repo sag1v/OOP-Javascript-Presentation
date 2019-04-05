@@ -6,7 +6,7 @@ import contentContext from './contentContext';
 
 class SubclassFactory extends React.Component {
     render() {
-        return <Runcode code={code} contextContent={contentContext}/>;
+        return <Runcode compactCode code={code} contextContent={contentContext}/>;
     }
 }
 

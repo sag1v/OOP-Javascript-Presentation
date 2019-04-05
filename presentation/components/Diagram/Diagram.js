@@ -74,9 +74,9 @@ const CodeLine = styled(Flex)`
      `};
 `;
 
-const ObjectMemory = ({ name, props = [], hideProto, protoValue, isCombo, highlight, highlightLinkage, isUndefined }) => (
+const ObjectMemory = ({ name, props = [], hideProto, protoValue, isCombo, highlight = 'inherit', highlightLinkage = 'inherit', highlightLinkageNoProto = 'inherit', isUndefined }) => (
     <Flex rowsDisplay bgColor={highlight}>
-        {!isCombo && <PropName highlightColor={highlightLinkage}>{`${name}: `}</PropName>}
+        {!isCombo && <PropName highlightColor={highlightLinkage || highlightLinkageNoProto}>{`${name}: `}</PropName>}
         {isUndefined ? <Undefined /> :
             <Flex rowsDisplay>
                 <Flex>

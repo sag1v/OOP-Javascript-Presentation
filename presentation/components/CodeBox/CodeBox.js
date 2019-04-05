@@ -20,6 +20,7 @@ const CodeStyle = styled.div`
 const Pre = styled.pre`
     && {
         padding-right: 0.5em;
+        font-size: ${({ compactCode }) => compactCode ? '0.9em' : '1em'};
     }
 `;
 
@@ -33,10 +34,10 @@ class CodeBox extends React.Component {
     }
 
     render() {
-        const { code, language, lineNumbers, className } = this.props;
+        const { code, language, lineNumbers, className, compactCode } = this.props;
         return (
             <CodeStyle>
-                <Pre data-line={lineNumbers} className={`line-numbers ${className}`}><code className={`language-${language}`}>{code}</code></Pre>
+                <Pre compactCode={compactCode} data-line={lineNumbers} className={`line-numbers ${className}`}><code className={`language-${language}`}>{code}</code></Pre>
             </CodeStyle>
         );
     }

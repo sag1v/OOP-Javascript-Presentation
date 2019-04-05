@@ -39,7 +39,7 @@ class RunCode extends React.Component {
 
     render() {
         const { lineNumbersIdx } = this.state;
-        const { contextContent, code } = this.props;
+        const { contextContent, code, compactCode } = this.props;
         const currentContent = contextContent[lineNumbersIdx];
         const lineNumbers = lineNumbersIdx !== null && currentContent && currentContent.lineNumbers;
         const DiagramToRender = currentContent && currentContent.render;
@@ -47,7 +47,7 @@ class RunCode extends React.Component {
             <WideSlide transition={["zoom"]} bgColor="primary">
                 <Flex rowsDisplay fluid>
                     <WideSlide.Side size={0.5}>
-                        <CodeBox lineNumbers={lineNumbers} code={code} />
+                        <CodeBox compactCode={compactCode} lineNumbers={lineNumbers} code={code} />
                     </WideSlide.Side>
                     <WideSlide.Side size={1}>
                         {DiagramToRender}

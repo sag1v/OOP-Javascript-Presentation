@@ -4,7 +4,7 @@ import Diagram from '../../Diagram';
 import { addIf } from '../utils';
 
 const highlightColor = "#31ff00";
-const highlightIf = condition => condition ? highlightColor : 'inherit';
+const highlightIf = condition => condition ? highlightColor : '';
 
 const userStoreName = "userLogic";
 const memberStoreName = "memberStore";
@@ -25,14 +25,17 @@ const NestedExecuation = ({
     showObj,
     newObjName,
     protoValue,
+    mutatedProtoValue,
     newPropName,
     newPropValue,
     showNewProp,
     returnNewObj,
     garbaged,
     showNestedExec,
+    isUndefined,
     noThread,
-    bordered
+    bordered,
+    gcNested
 }) => (
         <Diagram
             bordered={bordered}
@@ -42,8 +45,9 @@ const NestedExecuation = ({
                 <Primitives obj={memory} />,
                 ...addIf(showObj,
                     <Diagram.Obj
+                        isUndefined={isUndefined}
                         name={newObjName}
-                        protoValue={protoValue}
+                        protoValue={mutatedProtoValue || protoValue}
                         props={[
                             ...addIf(showNewProp, <Diagram.PrimitiveMemory name={newPropName} value={newPropValue} />)
                         ]}
@@ -60,13 +64,13 @@ const NestedExecuation = ({
                         memory={{ name: "John" }}
                         showObj
                         newObjName="newUser"
-                        protoValue={userStoreName}
+                        protoValue={protoValue}
                         newPropName="name"
                         newPropValue="John"
                         showNewProp
                         returnNewObj
                         noThread
-                        garbaged={false}
+                        garbaged={gcNested}
                     />
                 )
             ]}
@@ -89,14 +93,19 @@ const ToRender = ({
     returnNewUser,
     gcNewUser,
     highlightUser1Link,
+    highlightUser2Link,
+    highlightUser2SubLink,
     showUserLogicProto,
     showMemberUser,
     memberUserUndef,
     showCreateMemberCommand,
     showCreateMemberExec,
     showNewMemberObj,
+    isUserMemberUndef,
     showNewMemberName,
     returnNewMember,
+    memberProtoMutated,
+    gcNested,
     gcNewMember,
     showCreateUserNestedExec
 }) => {
@@ -110,7 +119,7 @@ const ToRender = ({
                         name={userStoreName}
                         hideProto={!showUserLogicProto}
                         protoValue="Object.prototype"
-                        highlightLinkage={highlightIf(highlightUser1Link)}
+                        highlightLinkage={highlightIf(highlightUser1Link || highlightUser2SubLink)}
                         props={[
                             <Diagram.Func
                                 hideObject
@@ -130,7 +139,8 @@ const ToRender = ({
                     <Diagram.Obj
                         name={memberStoreName}
                         protoValue={memberStoreLinked ? userStoreName : "Object.prototype"}
-                        highlightLinkage={highlightIf(highlightMemberLink)}
+                        highlightLinkage={highlightIf(highlightMemberLink || highlightUser2SubLink)}
+                        highlightLinkageNoProto={highlightIf(highlightUser2Link)}
                         props={[
                             <Diagram.Func
                                 hideObject
@@ -155,7 +165,7 @@ const ToRender = ({
                         name="memberUser"
                         isUndefined={memberUserUndef}
                         protoValue={memberStoreName}
-                        highlightLinkage={highlightIf(highlightUser1Link)}
+                        highlightLinkage={highlightIf(highlightUser2Link)}
                         props={[
                             <Diagram.PrimitiveMemory name="name" value="John" />,
                             <Diagram.PrimitiveMemory name="groupName" value="customers" />
@@ -184,14 +194,17 @@ const ToRender = ({
                     <NestedExecuation
                         memory={{ name: "John", groupName: "customers" }}
                         showObj={showNewMemberObj}
+                        isUndefined={isUserMemberUndef}
                         newObjName="newMemberUser "
                         protoValue={userStoreName}
+                        mutatedProtoValue={memberProtoMutated && memberStoreName}
                         newPropName="groupName"
                         newPropValue="customers"
                         showNewProp={showNewMemberName}
                         returnNewObj={returnNewMember}
                         garbaged={gcNewMember}
                         showNestedExec={showCreateUserNestedExec}
+                        gcNested={gcNested}
                     />
                 )
             ]}
@@ -213,7 +226,6 @@ export default [
     { lineNumbers: '1', render: <ToRender memberStoreLinked showUser userUndef showCreateUserCommand showCreateUserExec /> },
     { lineNumbers: '2', render: <ToRender memberStoreLinked showUser userUndef showCreateUserCommand showCreateUserExec showNewUserObj /> },
     { lineNumbers: '3', render: <ToRender memberStoreLinked showUser userUndef showCreateUserCommand showCreateUserExec showNewUserObj showNewUserName /> },
-    { lineNumbers: '3', render: <ToRender memberStoreLinked showUser userUndef showCreateUserCommand showCreateUserExec showNewUserObj showNewUserName returnNewUser /> },
     { lineNumbers: '4', render: <ToRender memberStoreLinked showUser userUndef showCreateUserCommand showCreateUserExec showNewUserObj showNewUserName returnNewUser /> },
     { lineNumbers: '25', render: <ToRender memberStoreLinked showUser showCreateUserCommand showCreateUserExec showNewUserObj showNewUserName returnNewUser gcNewUser /> },
     { lineNumbers: '26', render: <ToRender memberStoreLinked showUser showCreateUserCommand showCreateUserExec showNewUserObj showNewUserName returnNewUser gcNewUser highlightUser1Link /> },
@@ -262,6 +274,8 @@ export default [
                 showNewUserName
                 returnNewUser
                 gcNewUser
+                showNewMemberObj
+                isUserMemberUndef
                 showMemberUser
                 memberUserUndef
                 showCreateMemberCommand
@@ -269,5 +283,162 @@ export default [
                 showCreateUserNestedExec
             />
     },
-    { lineNumbers: ' ', render: <ToRender memberStoreLinked /> },
+    {
+        lineNumbers: '14', render:
+            <ToRender
+                memberStoreLinked
+                showUser
+                showCreateUserCommand
+                showCreateUserExec
+                showNewUserObj
+                showNewUserName
+                returnNewUser
+                gcNewUser
+                gcNested
+                showMemberUser
+                returnNewObj
+                showNewMemberObj
+                memberUserUndef
+                showCreateMemberCommand
+                showCreateMemberExec
+                showCreateUserNestedExec
+                showNestedExec
+            />
+    },
+    {
+        lineNumbers: '15', render:
+            <ToRender
+                memberStoreLinked
+                showUser
+                showCreateUserCommand
+                showCreateUserExec
+                showNewUserObj
+                showNewUserName
+                returnNewUser
+                gcNewUser
+                showNewMemberObj
+                gcNested
+                showMemberUser
+                memberProtoMutated
+                memberUserUndef
+                showCreateMemberCommand
+                showCreateMemberExec
+                showCreateUserNestedExec
+            />
+    },
+    {
+        lineNumbers: '16', render:
+            <ToRender
+                memberStoreLinked
+                showUser
+                showCreateUserCommand
+                showCreateUserExec
+                showNewUserObj
+                showNewUserName
+                returnNewUser
+                gcNewUser
+                showNewMemberObj
+                gcNested
+                showMemberUser
+                memberProtoMutated
+                showNewMemberName
+                memberUserUndef
+                showCreateMemberCommand
+                showCreateMemberExec
+                showCreateUserNestedExec
+            />
+    },
+    {
+        lineNumbers: '28', render:
+            <ToRender
+                memberStoreLinked
+                showUser
+                showCreateUserCommand
+                showCreateUserExec
+                showNewUserObj
+                showNewUserName
+                returnNewUser
+                gcNewUser
+                showNewMemberObj
+                gcNested
+                gcNewMember
+                showMemberUser
+                memberProtoMutated
+                showNewMemberName
+                showCreateMemberCommand
+                showCreateMemberExec
+                showCreateUserNestedExec
+            />
+    },
+    {
+        lineNumbers: '29', render:
+            <ToRender
+                memberStoreLinked
+                showUser
+                showCreateUserCommand
+                showCreateUserExec
+                showNewUserObj
+                showNewUserName
+                returnNewUser
+                gcNewUser
+                showNewMemberObj
+                gcNested
+                gcNewMember
+                showMemberUser
+                highlightUser2Link
+                memberProtoMutated
+                showNewMemberName
+                showCreateMemberCommand
+                showCreateMemberExec
+                showCreateUserNestedExec
+            />
+    },
+    {
+        lineNumbers: '30', render:
+            <ToRender
+                memberStoreLinked
+                showUser
+                showCreateUserCommand
+                showCreateUserExec
+                showNewUserObj
+                showNewUserName
+                returnNewUser
+                gcNewUser
+                showNewMemberObj
+                gcNested
+                gcNewMember
+                showMemberUser
+                highlightUser2Link
+                highlightUser2SubLink
+                memberProtoMutated
+                showNewMemberName
+                showCreateMemberCommand
+                showCreateMemberExec
+                showCreateUserNestedExec
+            />
+    },
+    {
+        lineNumbers: ' ', render:
+            <ToRender
+                memberStoreLinked
+                showUser
+                showCreateUserCommand
+                showCreateUserExec
+                showNewUserObj
+                showNewUserName
+                returnNewUser
+                gcNewUser
+                showNewMemberObj
+                gcNested
+                gcNewMember
+                showMemberUser
+                highlightUser2Link
+                highlightUser2SubLink
+                memberProtoMutated
+                showNewMemberName
+                showCreateMemberCommand
+                showCreateMemberExec
+                showCreateUserNestedExec
+            />
+    },
 ];
