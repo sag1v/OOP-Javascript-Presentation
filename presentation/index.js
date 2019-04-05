@@ -12,7 +12,8 @@ import {
   FunctionObjectCombo,
   ClassFunc,
   NativeChain,
-  SubclassFactory
+  SubclassFactory,
+  SubclassConstructor
 } from './components/Slides';
 
 // Import theme
@@ -50,6 +51,7 @@ export default class Presentation extends React.Component {
         <NativeChain />
         <NativeChain showSubClassing />
         <SubclassFactory />
+        <SubclassConstructor />
       </Deck>
     );
   }
