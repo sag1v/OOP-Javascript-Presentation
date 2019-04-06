@@ -22,7 +22,7 @@ const CodeSample = ({ code, title, content, wrapper: Wrapper }) => (
 );
 
 CodeSample.defaultProps = {
-    wrapper: DefaultWrapper
+    wrapper: ({children}) => <Flex>{children}</Flex> //DefaultWrapper
 };
 
 export default CodeSample;

@@ -9,7 +9,7 @@ const Wrapper = styled(Flex)`
     width: 100%;
     height: 100%;
     min-height: 70px;
-    background-color: #272822;
+    /* background-color: #272822; */
     color: #fff;
     font-size: 0.8em;
     margin: ${({ spaced }) => spaced ? '10px 0' : '0'};
@@ -28,7 +28,7 @@ const Wrapper = styled(Flex)`
 `;
 
 const Block = styled(Flex)`
-    border: 1px solid ${({bordered}) => bordered ? 'red' : '#ddd'};
+    border: 1px solid ${({ bordered }) => bordered ? 'red' : '#ddd'};
     padding: 0 5px 5px 5px;
     flex: ${({ size }) => size};
 `;
@@ -74,6 +74,12 @@ const CodeLine = styled(Flex)`
      `};
 `;
 
+const ClassSymbol = styled(Flex)`
+    font-size: 0.55em;
+    font-style: italic;
+    color: #00ff50;
+`;
+
 const ObjectMemory = ({ name, props = [], hideProto, protoValue, isCombo, highlight, highlightLinkage, highlightLinkageNoProto, isUndefined }) => (
     <Flex rowsDisplay bgColor={highlight}>
         {!isCombo && <PropName highlightColor={highlightLinkage || highlightLinkageNoProto}>{`${name}: `}</PropName>}
@@ -105,11 +111,12 @@ const WrapedMemory = styled(Flex)`
     margin-bottom: ${({ hideObject }) => hideObject ? '0' : '5px'};
 `;
 
-const FuncMemory = ({ name, props, hideObject, highlightLinkage, isCombo = true, hideProto = true, protoValue }) => (
+const FuncMemory = ({ name, props, hideObject, highlightLinkage, isCombo = true, hideProto = true, protoValue, isClass }) => (
     <WrapedMemory hideObject={hideObject}>
         <Flex rowsDisplay>
             <PropName highlightColor={highlightLinkage}>{`${name}: `}</PropName>
             <Flex>[ ƒ ]</Flex>
+            {isClass && <ClassSymbol>class</ClassSymbol>}
         </Flex>
         {!hideObject && (
             <Flex>

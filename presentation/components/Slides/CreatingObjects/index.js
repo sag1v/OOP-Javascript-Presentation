@@ -5,9 +5,11 @@ import Runcode from '../../Runcode';
 import literal from '!raw-loader!./literalCode';
 import dotNotation from '!raw-loader!./dotNotationCode';
 import objectCreate from '!raw-loader!./objectCreateCode';
-import functionFactory from '!raw-loader!./functionCode';
+import functionFactoryExampleCode from '!raw-loader!./functionFactoryExampleCode';
+import functionCode from '!raw-loader!./functionCode';
 import contextContent from './contextContent';
 import WideSlide from '../../WideSlide';
+import { Slide, Appear, Text } from 'spectacle';
 
 
 const createObjectWith = {
@@ -25,22 +27,22 @@ const createObjectWith = {
 	},
 	functionFactory: {
 		title: "Factory Functions",
-		code: functionFactory
+		code: functionFactoryExampleCode
 	},
 };
 
 
-const functionExampleCode = createObjectWith.functionFactory.code;
+const functionExampleCode = functionCode;
 
 const CreatingObjects = ({ createUsing, runCode }) => runCode
 	? <Runcode code={functionExampleCode} contextContent={contextContent} />
 	: (
-		<WideSlide fluid>
+		<Slide className="WideSlide" fluid>
 			<CodeSample
 				code={createObjectWith[createUsing].code}
 				title={createObjectWith[createUsing].title}
 			/>
-		</WideSlide>
+		</Slide>
 	);
 
 const typeKeys = Object.keys(createObjectWith);

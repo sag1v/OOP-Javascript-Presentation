@@ -23,7 +23,7 @@ const title = "The new keyword"
 const Description = styled(Flex)`
     text-align: left;
     padding: 15px;
-    background-color: #efefef;
+    background-color: transparent;
     box-shadow: 0 0 2px 1px #aaa;
 `;
 

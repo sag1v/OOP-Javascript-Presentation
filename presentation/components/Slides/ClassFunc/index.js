@@ -10,7 +10,7 @@ import indexCollection from './resourceCollection';
 const HalfCircle = styled(Flex)`
     transition: color 250ms ease-in-out, box-shadow 100ms ease-in-out;
     cursor: pointer;
-    background-color: #fff;
+    /* background-color: #fff; */
     box-shadow: 0 0 5px 1px #777;
     height: ${({ size }) => `${size * 2}px`};
     width: ${({ size }) => `${size}px`};
@@ -21,8 +21,8 @@ const HalfCircle = styled(Flex)`
     margin: 2px;
     &:hover{
         /* box-shadow: 0 0 2px 2px #777; */
-        background-color: #fefefe;
-        color: #2196f3;
+        background-color: #2a2b2d;
+        color: #a6e22e;
     }
     &:focus, &:active{
         box-shadow: 0 0 0px 1px #aaa;

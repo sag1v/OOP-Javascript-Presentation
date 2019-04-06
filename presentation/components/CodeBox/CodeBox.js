@@ -21,6 +21,8 @@ const Pre = styled.pre`
     && {
         padding-right: 0.5em;
         font-size: ${({ compactCode }) => compactCode ? '0.9em' : '1em'};
+        background: #1f2022;
+        border: 1px solid;
     }
 `;
 

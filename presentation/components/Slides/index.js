@@ -6,3 +6,4 @@ export {default as ClassFunc} from './ClassFunc';
 export {default as NativeChain} from './NativeChain';
 export {default as SubclassFactory} from './SubclassFactory';
 export {default as SubclassConstructor} from './SubclassConstructor';
+export {default as SubclassClass} from './SubclassClass';

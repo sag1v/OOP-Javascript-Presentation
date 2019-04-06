@@ -14,6 +14,7 @@ const ToRender = ({
     showUserPrototype,
     showGroupUser,
     showGroupUserPrototype,
+    showUserProto,
     mutateGroupProto,
     showUser1,
     user1Undef,
@@ -28,7 +29,6 @@ const ToRender = ({
     gcUser1Context,
     showMemberUserContext,
     gcMemberUserContext,
-    showUserCallThis,
     showThisGroupNameMemberUser,
     showUserCallThisContext,
     showThisNameMemberUser,
@@ -38,8 +38,11 @@ const ToRender = ({
             global
             memoryItems={[
                 ...addIf(showUser,
-                    <Diagram.Func name={userfuncName}
-                        hideProto
+                    <Diagram.Func
+                        isClass
+                        name={userfuncName}
+                        hideProto={!showUserProto}
+                        protoValue="Function.prototype"
                         highlightLinkage={highlightIf(highlightUser1Chain || highlightSubChainMemberUser)}
                         props={[
                             <Diagram.Obj
@@ -61,8 +64,10 @@ const ToRender = ({
                 ),
                 ...addIf(showGroupUser,
                     <Diagram.Func
+                        isClass
                         name={groupUserFuncName}
-                        hideProto
+                        hideProto={false}
+                        protoValue={userfuncName}
                         highlightLinkage={highlightIf(highlightGroupUserChain || highlightSubChainMemberUser)}
                         props={[
                             <Diagram.Obj
@@ -126,17 +131,18 @@ const ToRender = ({
                         memoryItems={[
                             <Diagram.PrimitiveMemory name="name" value="John" />,
                             <Diagram.PrimitiveMemory name="groupName" value="customers" />,
-                            <Diagram.Obj
-                                name="this"
-                                protoValue={`${groupUserFuncName}.prototype`}
-                                props={[
-                                    ...addIf(showThisGroupNameMemberUser, <Diagram.PrimitiveMemory name="groupName" value="customers" />),
-                                    ...addIf(showThisNameMemberUser, <Diagram.PrimitiveMemory name="name" value="John" />),
-                                ]}
-                            />
+                            gcCallUser
+                                ? <Diagram.Obj
+                                    name="this"
+                                    protoValue={`${groupUserFuncName}.prototype`}
+                                    props={[
+                                        <Diagram.PrimitiveMemory name="name" value="John" />,
+                                        ...addIf(showThisGroupNameMemberUser, <Diagram.PrimitiveMemory name="groupName" value="customers" />),
+                                    ]}
+                                />
+                                : <Diagram.PrimitiveMemory name="this" value="--Uninitialized--" />
                         ]}
                         threadItems={[
-                            ...addIf(showUserCallThis, "User.call(this, name)"),
                             ...addIf(showUserCallThisContext,
                                 <Diagram
                                     hideExecutionContext
@@ -147,7 +153,6 @@ const ToRender = ({
                                             name="this"
                                             protoValue={`${groupUserFuncName}.prototype`}
                                             props={[
-                                                <Diagram.PrimitiveMemory name="groupName" value="customers" />,
                                                 ...addIf(showThisNameMemberUser, <Diagram.PrimitiveMemory name="name" value="John" />)
                                             ]}
                                         />
@@ -165,29 +170,27 @@ const ToRender = ({
 
 export default [
     { lineNumbers: ' ', render: <ToRender /> },
-    { lineNumbers: '1-3', render: <ToRender showUser /> },
-    { lineNumbers: '5-7', render: <ToRender showUser showUserPrototype /> },
-    { lineNumbers: '11-14', render: <ToRender showUser showUserPrototype showGroupUser /> },
-    { lineNumbers: '16-18', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype /> },
-    { lineNumbers: '20', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto /> },
+    { lineNumbers: '1-8', render: <ToRender showUser showUserPrototype /> },
+    { lineNumbers: '12-22', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto /> },
+    { lineNumbers: '12-22', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUserProto /> },
     /* create user1 */
-    { lineNumbers: '24', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 user1Undef showUser1thread /> },
-    { lineNumbers: '1', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 user1Undef showUser1thread showUser1Context /> },
-    { lineNumbers: '2', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 user1Undef showUser1thread showUser1Context showThisNameUser1 /> },
-    { lineNumbers: '24', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showThisNameUser1 gcUser1Context /> },
+    { lineNumbers: '26', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 user1Undef showUser1thread showUserProto /> },
+    { lineNumbers: '2', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 user1Undef showUser1thread showUser1Context showUserProto /> },
+    { lineNumbers: '3', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 user1Undef showUser1thread showUser1Context showThisNameUser1 showUserProto /> },
+    { lineNumbers: '26', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showThisNameUser1 gcUser1Context showUserProto /> },
     /* EOF create user1 */
-    { lineNumbers: '25', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 highlightUser1Chain showUser1thread showUser1Context showThisNameUser1 gcUser1Context /> },
+    { lineNumbers: '27', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 highlightUser1Chain showUser1thread showUser1Context showThisNameUser1 gcUser1Context showUserProto /> },
     /* create group member */
-    { lineNumbers: '27', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser memberUserUndef showThisNameUser1 gcUser1Context /> },
-    { lineNumbers: '11', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser memberUserUndef showThisNameUser1 showMemberUserContext gcUser1Context /> },
-    { lineNumbers: '12', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser memberUserUndef showMemberUserContext showThisNameUser1 gcUser1Context showThisGroupNameMemberUser /> },
-    { lineNumbers: '13', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser memberUserUndef showUserCallThis showMemberUserContext showThisNameUser1 gcUser1Context showThisGroupNameMemberUser /> },
-    { lineNumbers: '1', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser memberUserUndef showUserCallThis showMemberUserContext showThisNameUser1 gcUser1Context showUserCallThisContext showThisGroupNameMemberUser /> },
-    { lineNumbers: '2', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser memberUserUndef showUserCallThis showMemberUserContext showThisNameUser1 gcUser1Context showUserCallThisContext showThisNameMemberUser showThisGroupNameMemberUser /> },
-    { lineNumbers: '13', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser memberUserUndef showUserCallThis showMemberUserContext showThisNameUser1 gcUser1Context showUserCallThisContext showThisNameMemberUser gcCallUser showThisGroupNameMemberUser /> },
-    { lineNumbers: '27', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser showUserCallThis showThisNameUser1 showMemberUserContext gcUser1Context showUserCallThisContext showThisNameMemberUser showThisGroupNameMemberUser gcCallUser gcMemberUserContext showThisGroupNameMemberUser /> },
+    { lineNumbers: '29', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser memberUserUndef showThisNameUser1 gcUser1Context showUserProto /> },
+    { lineNumbers: '13', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser memberUserUndef showThisNameUser1 showMemberUserContext gcUser1Context showUserProto /> },
+    { lineNumbers: '15', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser memberUserUndef showMemberUserContext showThisNameUser1 gcUser1Context showUserProto /> },
+    { lineNumbers: '2', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser memberUserUndef showMemberUserContext showThisNameUser1 gcUser1Context showUserCallThisContext showUserProto /> },
+    { lineNumbers: '3', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser memberUserUndef showMemberUserContext showThisNameUser1 gcUser1Context showUserCallThisContext showThisNameMemberUser showUserProto /> },
+    { lineNumbers: '15', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser memberUserUndef showMemberUserContext showThisNameUser1 gcUser1Context showUserCallThisContext showThisNameMemberUser gcCallUser showUserProto /> },
+    { lineNumbers: '17', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser memberUserUndef showMemberUserContext showThisNameUser1 gcUser1Context showUserCallThisContext showThisNameMemberUser gcCallUser showThisGroupNameMemberUser showUserProto /> },
+    { lineNumbers: '29', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser showThisNameUser1 showMemberUserContext gcUser1Context showUserCallThisContext showThisNameMemberUser showThisGroupNameMemberUser gcCallUser gcMemberUserContext showThisGroupNameMemberUser showUserProto /> },
     /* EOF create group member */
-    { lineNumbers: '28', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser highlightGroupUserChain showUserCallThis showMemberUserContext showThisNameUser1 gcUser1Context showUserCallThisContext showThisNameMemberUser showThisGroupNameMemberUser gcCallUser gcMemberUserContext showThisGroupNameMemberUser /> },
-    { lineNumbers: '29', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser highlightSubChainMemberUser showUserCallThis showMemberUserContext showThisNameUser1 gcUser1Context showUserCallThisContext showThisNameMemberUser showThisGroupNameMemberUser gcCallUser gcMemberUserContext showThisGroupNameMemberUser /> },
-    { lineNumbers: ' ', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser showUserCallThis showThisNameUser1 showMemberUserContext gcUser1Context showUserCallThisContext showThisNameMemberUser showThisGroupNameMemberUser gcCallUser gcMemberUserContext showThisGroupNameMemberUser /> },
+    { lineNumbers: '30', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser highlightGroupUserChain showMemberUserContext showThisNameUser1 gcUser1Context showUserCallThisContext showThisNameMemberUser showThisGroupNameMemberUser gcCallUser gcMemberUserContext showThisGroupNameMemberUser showUserProto /> },
+    { lineNumbers: '31', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser highlightSubChainMemberUser showMemberUserContext showThisNameUser1 gcUser1Context showUserCallThisContext showThisNameMemberUser showThisGroupNameMemberUser gcCallUser gcMemberUserContext showThisGroupNameMemberUser showUserProto /> },
+    { lineNumbers: ' ', render: <ToRender showUser showUserPrototype showGroupUser showGroupUserPrototype mutateGroupProto showUser1 showUser1thread showUser1Context showMemberUser showThisNameUser1 showMemberUserContext gcUser1Context showUserCallThisContext showThisNameMemberUser showThisGroupNameMemberUser gcCallUser gcMemberUserContext showThisGroupNameMemberUser showUserProto /> },
 ];
