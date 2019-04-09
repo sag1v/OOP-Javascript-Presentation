@@ -18,13 +18,15 @@ import {
   FunctionObjectCombo,
   ClassFunc,
   NativeChain,
+  This,
   SubclassFactory,
   SubclassConstructor,
-  SubclassClass
+  SubclassClass,
+  Questions
 } from './components/Slides';
 
 import jsLogo from '../assets/jslogo.png';
-import thisRulesImage from '../assets/this-rules.png';
+
 
 // Import theme
 import createTheme from "spectacle/lib/themes/default";
@@ -33,6 +35,7 @@ import createTheme from "spectacle/lib/themes/default";
 import "normalize.css";
 import styled from "react-emotion";
 import Flex from "./components/Flex";
+
 
 const theme = createTheme({
   primary: "#1F2022",
@@ -45,8 +48,8 @@ const theme = createTheme({
     secondary: "Helvetica"
   });
 
-const StyledHeading = styled(Heading)`
-  color: ${({ textColor }) => textColor ? textColor : '#fff'};
+  const StyledHeading = styled(Heading)`
+    color: ${({ textColor }) => textColor ? textColor : '#fff'};
 `;
 
 const OpeningSlide = ({ title, children }) => (
@@ -65,11 +68,13 @@ const ClosingSlide = ({ title, children }) => (
 
 const Signature = styled(Flex)`
   position: fixed;
-  bottom: 0;
-  left: 0;
   color: #fff;
   z-index: 99999;
-  font-size: 1.6em;
+  font-size: 0.5em;
+  opacity: 0.2;
+  bottom: 20px;
+  left: 20px;
+  font-family: cursive;
 `;
 
 export default class Presentation extends React.Component {
@@ -101,6 +106,7 @@ export default class Presentation extends React.Component {
           <ClosingSlide title="really??">
             <Flex>Can't we automate this?</Flex>
           </ClosingSlide>
+          <Questions on="object.Create"/>
           <OpeningSlide title="new">
             <Flex>The new key word</Flex>
           </OpeningSlide>
@@ -119,6 +125,7 @@ export default class Presentation extends React.Component {
           <ClosingSlide title="nice">
             <Flex>But can we do better?</Flex>
           </ClosingSlide>
+          <Questions on="new"/>
           <OpeningSlide title="class">
             <Flex>some sugar and stuff...</Flex>
             <Flex>since ES2015</Flex>
@@ -136,13 +143,13 @@ export default class Presentation extends React.Component {
             <Flex>We can add links to the chain </Flex>
             <Flex>usually called "sub-classing" </Flex>
           </ClosingSlide>
+          <Questions on="[[prototype]]"/>
           <OpeningSlide title="this">
             <Flex>The golden rules</Flex>
           </OpeningSlide>
-          <Slide>
-            <StyledHeading>what is this?</StyledHeading>
-            <Image src={thisRulesImage} />
-          </Slide>
+          <This />
+          <This showChallenge />
+          <Questions on="this"/>
           <OpeningSlide title="sub class">
             <Flex>Not the inheritance that you think</Flex>
           </OpeningSlide>
@@ -158,6 +165,7 @@ export default class Presentation extends React.Component {
             <Flex>class functions</Flex>
           </ClosingSlide>
           <SubclassClass />
+          <Questions on="sub-classing"/>
         </Deck>
         <Signature>@sag1v</Signature>
       </Flex>
