@@ -231,19 +231,19 @@ export default class Presentation extends React.Component {
           <OpeningSlide>
             <Flex>Hope it was informative</Flex>
             <OpeningSlide.Title>Thank You!</OpeningSlide.Title>
-            <Handle>
+            <Handle className="social-handle">
               <SocialLogo>
                 <Image height="25px" src={gmailLogo} />
               </SocialLogo>
               <Flex>sagiv.bengiat@gmail.com</Flex>
             </Handle>
-            <Handle>
+            <Handle className="social-handle">
               <SocialLogo>
                 <Image height="25px" src={twitterLogo} />
               </SocialLogo>
               <Flex>@sag1v</Flex>
             </Handle>
-            <Handle>
+            <Handle className="social-handle">
               <SocialLogo>
                 <Image height="30px" src={githubLogo} />
               </SocialLogo>
