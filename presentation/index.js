@@ -83,7 +83,8 @@ const Signature = styled(Flex)`
   font-family: cursive;
 `;
 
-const Handle = styled(Flex)`
+const Handle = styled.div`
+  display: flex;
   flex-direction: row !important;
   justify-content: center;
   align-items: center;
