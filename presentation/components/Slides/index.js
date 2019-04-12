@@ -1,3 +1,4 @@
+export { default as Test } from './Test';
 export { default as CreatingObjects } from './CreatingObjects';
 export { default as Prototype } from './Prototype';
 export { default as NewFunc } from './NewFunc';
