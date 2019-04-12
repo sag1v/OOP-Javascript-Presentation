@@ -33,7 +33,7 @@ import createTheme from "spectacle/lib/themes/default";
 
 // Require CSS
 import "normalize.css";
-import styled from "react-emotion";
+import styled from "styled-components";
 import Flex from "./components/Flex";
 
 
@@ -83,8 +83,7 @@ const Signature = styled(Flex)`
   font-family: cursive;
 `;
 
-const Handle = styled.div`
-  display: flex;
+const Handle = styled(Flex)`
   flex-direction: row !important;
   justify-content: center;
   align-items: center;
