@@ -138,10 +138,10 @@ export default class Presentation extends React.Component {
             <Flex>We actually mean __proto__</Flex>
           </OpeningSlide>
           <Prototype />
-          <ClosingSlide >
+          {/* <ClosingSlide >
             <ClosingSlide.Title>cool</ClosingSlide.Title>
             <Flex>But Can we automate some of it?</Flex>
-          </ClosingSlide>
+          </ClosingSlide> */}
           <Questions on="object.Create" />
           <OpeningSlide>
             <OpeningSlide.Title>new</OpeningSlide.Title>
@@ -162,10 +162,10 @@ export default class Presentation extends React.Component {
             <Flex>a.k.a The constructor function pattern</Flex>
           </OpeningSlide>
           <NewFunc runCode />
-          <ClosingSlide>
+          {/* <ClosingSlide>
             <ClosingSlide.Title>nice</ClosingSlide.Title>
             <Flex>But can we do better?</Flex>
-          </ClosingSlide>
+          </ClosingSlide> */}
           <Questions on="new" />
           <OpeningSlide>
             <OpeningSlide.Title>class</OpeningSlide.Title>

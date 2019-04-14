@@ -15,9 +15,10 @@ import code5 from '!raw-loader!./challenges/5.js';
 import code6 from '!raw-loader!./challenges/6.js';
 import code7 from '!raw-loader!./challenges/7.js';
 import code8 from '!raw-loader!./challenges/8.js';
+import code9 from '!raw-loader!./challenges/9.js';
 
 
-const codes = [code1, code2, code3, code4, code5, code6, code7, code8];
+const codes = [code1, code2, code3, code4, code5, code6, code7, code8, code9];
 
 const Wrapper = styled(Flex)`
   margin-top: 30px;
