@@ -4,7 +4,7 @@ function Foo() {
 }
 
 function bar() {
-    //'use strict'
+    'use strict'
     console.log(this.x)
 }
 

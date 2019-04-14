@@ -8,6 +8,7 @@ import { Image } from 'spectacle';
 import styled from 'react-emotion';
 
 import code1 from '!raw-loader!./challenges/1.js';
+import code1_2 from '!raw-loader!./challenges/1_2.js';
 import code2 from '!raw-loader!./challenges/2.js';
 import code3 from '!raw-loader!./challenges/3.js';
 import code4 from '!raw-loader!./challenges/4.js';
@@ -18,7 +19,7 @@ import code8 from '!raw-loader!./challenges/8.js';
 import code9 from '!raw-loader!./challenges/9.js';
 
 
-const codes = [code1, code2, code3, code4, code5, code6, code7, code8, code9];
+const codes = [code1, code1_2, code2, code3, code4, code5, code6, code7, code8, code9];
 
 const Wrapper = styled(Flex)`
   margin-top: 30px;
@@ -51,7 +52,7 @@ class This extends React.Component {
   state = { index: 0 };
 
   componentDidMount() {
-    if(this.props.showChallenge){
+    if (this.props.showChallenge) {
       document.addEventListener('keydown', this.updateIndex);
     }
   }
