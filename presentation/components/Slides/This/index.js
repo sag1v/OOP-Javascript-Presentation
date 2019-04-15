@@ -92,24 +92,4 @@ class This extends React.Component {
   }
 }
 
-/**
- * 
- *           <Slide>
-            <StyledHeading>what is this?</StyledHeading>
-            <Image src={thisRulesImage} />
-          </Slide>
-          <Slide>
-            <StyledHeading>this challenge</StyledHeading>
-            <Flex rowsDisplay fluid>
-              <Flex size={1.5} fluid>
-                <CodeBox />
-              </Flex>
-              <Flex size={1}>
-                <Image src={thisRulesImage} />
-              </Flex>
-            </Flex>
-          </Slide>
- * 
- * 
- */
 export default This;

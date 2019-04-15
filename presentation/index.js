@@ -134,15 +134,15 @@ export default class Presentation extends React.Component {
             <Flex>Dont Repeat Yourself</Flex>
           </ClosingSlide>
           <OpeningSlide>
-            <OpeningSlide.Title>the [[prototype]] chain</OpeningSlide.Title>
-            <Flex>We actually mean __proto__</Flex>
+            <OpeningSlide.Title>OLOO</OpeningSlide.Title>
+            <Flex>Objects Linked To Other Objects</Flex>
           </OpeningSlide>
           <Prototype />
-          {/* <ClosingSlide >
-            <ClosingSlide.Title>cool</ClosingSlide.Title>
-            <Flex>But Can we automate some of it?</Flex>
-          </ClosingSlide> */}
-          <Questions on="object.Create" />
+          <ClosingSlide >
+            <ClosingSlide.Title>OLOO</ClosingSlide.Title>
+            <Flex>Taking advantage of the [[Prototype]] linkage</Flex>
+          </ClosingSlide>
+          <Questions on="OLOO" />
           <OpeningSlide>
             <OpeningSlide.Title>new</OpeningSlide.Title>
             <Flex>The new key word</Flex>
