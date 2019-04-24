@@ -25,6 +25,18 @@ const Wrapper = styled(Flex)`
   margin-top: 30px;
 `;
 
+const CodeHeader = styled(Flex)`
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 0 5px 10px 5px;
+`;
+
+CodeHeader.Instructions = styled(Flex)`
+  font-size: 0.42em;
+  margin-left: 5px;
+  padding-bottom: 2px;
+`;
+
 const RulesOnly = () => (
   <React.Fragment>
     <Header align="center">what is this?</Header>
@@ -37,7 +49,10 @@ const WithChallenge = ({ index }) => (
     <Header align="center">The "this" Challenge</Header>
     <Wrapper rowsDisplay fluid>
       <Flex size={0.6} fluid>
-        <Header fontSize={1} align="center">{`challenge #${index + 1}`}</Header>
+        <CodeHeader rowsDisplay>
+          <Header fontSize={1} align="center">{`challenge #${index + 1} / ${codes.length}`}</Header>
+          <CodeHeader.Instructions>Use the ↓ ↑ arrows to browse challenges</CodeHeader.Instructions>
+        </CodeHeader>
         <CodeBox code={codes[index]} />
       </Flex>
       <Flex size={1}>

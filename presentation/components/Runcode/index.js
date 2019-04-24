@@ -1,9 +1,10 @@
 import React from 'react';
+import styled from 'styled-components';
 import WideSlide from '../WideSlide';
 import Flex from '../Flex';
 import CodeBox from '../CodeBox';
 import { createLineNumberUpdater } from '../Slides/utils';
-
+import Instructions from '../RuncodeInstructions';
 
 class RunCode extends React.Component {
 
@@ -45,6 +46,10 @@ class RunCode extends React.Component {
         const DiagramToRender = currentContent && currentContent.render;
         return (
             <WideSlide transition={["zoom"]} bgColor="primary">
+                <Instructions>
+                    <Instructions.Block>Use the ↓ ↑ arrows to run the code - </Instructions.Block>
+                    <Instructions.Block>{`line (${lineNumbersIdx} / ${contextContent.length - 1})`}</Instructions.Block>
+                </Instructions>
                 <Flex rowsDisplay fluid>
                     <WideSlide.Side size={0.5}>
                         <CodeBox compactCode={compactCode} lineNumbers={lineNumbers} code={code} />
